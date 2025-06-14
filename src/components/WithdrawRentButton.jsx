@@ -1,32 +1,32 @@
 import { useState } from 'react';
-import { usePrepareContractWrite, useContractWrite, useWaitForTransaction } from 'wagmi';
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../utils/constants';
+import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from '../utils/constants';
 
 export default function WithdrawRentButton() {
   const [rentalId, setRentalId] = useState('');
   const [txHash, setTxHash] = useState(null);
 
-  const { config } = usePrepareContractWrite({
-    address: CONTRACT_ADDRESS,
-    abi: CONTRACT_ABI,
-    functionName: 'withdrawRent',
-    args: [parseInt(rentalId)],
-    enabled: rentalId !== '',
-  });
+  const { writeContractAsync } = useWriteContract();
+  const { isLoading, isSuccess, isError } = useWaitForTransactionReceipt({ hash: txHash });
 
-  const { write, data, isLoading, isSuccess } = useContractWrite(config);
-  const wait = useWaitForTransaction({ hash: data?.hash });
-
-  const handleWithdraw = () => {
-    if (write) {
-      write();
-      setTxHash(data?.hash);
+  const handleWithdraw = async () => {
+    try {
+      const hash = await writeContractAsync({
+        address: CONTRACT_ADDRESS,
+        abi: CONTRACT_ABI,
+        functionName: 'withdrawRent',
+        args: [BigInt(rentalId)],
+      });
+      setTxHash(hash);
+    } catch (err) {
+      console.error('Withdraw failed:', err);
     }
   };
 
   return (
     <div className="p-4 border rounded-xl shadow-md w-full max-w-md mt-6">
       <h2 className="text-xl mb-4 font-bold">Withdraw Rent</h2>
+
       <input
         type="number"
         className="w-full mb-3 p-2 border"
@@ -37,15 +37,15 @@ export default function WithdrawRentButton() {
 
       <button
         onClick={handleWithdraw}
-        disabled={!write}
         className="bg-purple-600 text-white px-4 py-2 rounded"
+        disabled={!rentalId}
       >
         Withdraw
       </button>
 
       {isLoading && <p className="mt-2 text-yellow-600">Processing transaction...</p>}
-      {wait.isSuccess && <p className="mt-2 text-green-600">✅ Rent withdrawn!</p>}
-      {wait.isError && <p className="mt-2 text-red-600">❌ Error withdrawing rent.</p>}
+      {isSuccess && <p className="mt-2 text-green-600">✅ Rent withdrawn!</p>}
+      {isError && <p className="mt-2 text-red-600">❌ Error withdrawing rent.</p>}
     </div>
   );
 }
