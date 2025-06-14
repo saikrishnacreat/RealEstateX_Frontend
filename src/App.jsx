@@ -1,18 +1,20 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import CreateRentalForm from './components/CreateRentalForm';
-import WithdrawRentButton from './components/WithdrawRentButton';
+import { Routes, Route } from 'react-router-dom';
+import Landing from './pages/Landing';
+import Dashboard from './pages/Dashboard';
+import { ConnectButton } from '@rainbow-me/rainbowkit'; // ✅ Add this
 
-function App() {
+export default function App() {
   return (
-    <div className="min-h-screen p-8 bg-gray-100">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">RealEstateX 🏠</h1>
-        <ConnectButton />
+    <div className="min-h-screen bg-gray-100">
+      <div className="flex justify-end p- shadow bg-white">
+        <ConnectButton /> {/* ✅ Wallet connect button here */}
       </div>
-      <CreateRentalForm />
-      <WithdrawRentButton />
+      <br>
+      </br>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
     </div>
   );
 }
-
-export default App;
