@@ -1,30 +1,30 @@
-import { useNavigate } from 'react-router-dom';
-import LeaseLinkLogo from '../assets/LeaseLink.png';
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { BackgroundLinesDemo } from '../components/BackgroundLinesDemo'
+import LeaseLink from '../assets/LeaseLink.png'
+import "../index.css";
 
 export default function Landing() {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen bg-gradient-to-br from-indigo-600 to-purple-800 flex flex-col items-center justify-center text-white px-4">
-    <div className="flex justify-center">
-      <img
-        src={LeaseLinkLogo}
-        alt="LeaseLink Logo"
-        style={{ width: '80px', height: 'auto' }} // ⬅️ smaller logo
-      />
+    <div className="relative h-screen w-full bg-white">
+      <BackgroundLinesDemo />
+      <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center">
+        <img
+          src={LeaseLink}
+          alt="LeaseLink"
+          className="w-20 h-auto mb-6"
+        />
+        <h1 className="text-4xl font-bold text-indigo-700 mb-2">Welcome to LeaseLink</h1>
+        <p className="mb-6 text-lg text-gray-600">Decentralized Rental Agreement Management</p>
+        <button
+          className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold shadow-lg hover:bg-indigo-700"
+          onClick={() => navigate('/dashboard')}
+        >
+          Enter App
+        </button>
       </div>
-      <h1 className="text-4xl font-extrabold mb-2 tracking-tight drop-shadow">
-        Welcome to LeaseLink
-      </h1>
-      <p className="text-lg md:text-xl text-purple-200 mb-8 max-w-md text-center">
-        A decentralized platform for secure, blockchain-powered rental agreements.
-      </p>
-      <button
-        className="bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold shadow-lg hover:bg-gray-100 transition-all"
-        onClick={() => navigate('/dashboard')}
-      >
-        Enter App
-      </button>
     </div>
-  );
+  )
 }
