@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BackgroundLinesDemo } from '../components/BackgroundLinesDemo'
+import { CoverDemo } from '../components/CoverDemo'
 import LeaseLink from '../assets/LeaseLink.png'
 import "../index.css";
 
@@ -10,6 +11,7 @@ export default function Landing() {
   return (
     <div className="relative h-screen w-full bg-white">
       <BackgroundLinesDemo />
+      <br></br>
       <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center">
         <img
           src={LeaseLink}

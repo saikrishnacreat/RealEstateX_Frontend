@@ -25,11 +25,11 @@ export default function WithdrawRentButton() {
 
   return (
     <div className="p-4 border rounded-xl shadow-md w-full max-w-md mt-6">
-      <h2 className="text-xl mb-4 font-bold">Withdraw Rent</h2>
+      <h2 className="text-xl mb-4 font-bold text-white">Withdraw Rent</h2>
 
       <input
         type="number"
-        className="w-full mb-3 p-2 border"
+        className="w-full mb-3 p-2 border text-white"
         placeholder="Rental ID"
         value={rentalId}
         onChange={(e) => setRentalId(e.target.value)}
@@ -37,7 +37,7 @@ export default function WithdrawRentButton() {
 
       <button
         onClick={handleWithdraw}
-        className="bg-purple-600 text-white px-4 py-2 rounded"
+        className="bg-purple-600 text-white px-4 py-2 rounded text-white"
         disabled={!rentalId}
       >
         Withdraw
